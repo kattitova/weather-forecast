@@ -1,6 +1,6 @@
 export const temperatureChartSettings = (
-  xData: string[],
-  yData: number[],
+  xData: string[] | number[],
+  yData: string[] | number[],
   chartColor: string,
   fillChart: string,
   chartName: string

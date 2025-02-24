@@ -1,44 +1,15 @@
-import { useEffect, useMemo, useRef } from 'react';
-import { CurrentCityData, RootState } from '../../store';
-import { useSelector } from 'react-redux';
-import moment from 'moment';
+import { useEffect, useRef } from 'react';
 import Plotly from 'plotly.js-dist';
 import * as S from './styled';
+import { useChartData } from '../../hooks';
 
 export const RainChance = () => {
   const todayRef = useRef<HTMLDivElement>(null);
 
-  const city: CurrentCityData = useSelector(
-    (state: RootState) => state.currentCity.city
-  );
-
-  const weather = city?.weather;
-
-  const chartData = useMemo(() => {
-    const daily = weather?.daily;
-    const daily_units = weather?.daily_units;
-    if (!daily || !daily_units) return;
-
-    return {
-      yAxis: daily.time.map((item: string) => moment(item).format('MMM D')),
-      xAxis: daily.precipitation_probability_max,
-      units: daily_units.precipitation_probability_max,
-    };
-  }, [weather])!;
+  const chartData = useChartData('precipitation');
 
   useEffect(() => {
     if (!chartData && !todayRef.current) return;
-
-    // const daily = weather?.daily;
-    // const daily_units = weather?.daily_units;
-    // if (!daily || !daily_units) return;
-
-    // const yAxis: string[] = daily.time.map((item: string) =>
-    //   moment(item).format('MMM D')
-    // );
-    // const xAxis: number[] = daily.precipitation_probability_max;
-
-    // const mes = daily_units.precipitation_probability_max;
 
     const trace: Partial<Plotly.Data>[] = [
       {
@@ -104,7 +75,7 @@ export const RainChance = () => {
       Plotly.newPlot(todayRef.current, trace, layout, config);
   }, [chartData]);
 
-  if (!weather) {
+  if (!chartData) {
     return <p>Loading...</p>;
   }
 
