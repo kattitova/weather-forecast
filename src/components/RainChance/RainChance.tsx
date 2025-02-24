@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { CurrentCityData, RootState } from '../../store';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
@@ -14,28 +14,40 @@ export const RainChance = () => {
 
   const weather = city?.weather;
 
-  useEffect(() => {
-    if (!weather && !todayRef.current) return;
-
+  const chartData = useMemo(() => {
     const daily = weather?.daily;
     const daily_units = weather?.daily_units;
     if (!daily || !daily_units) return;
 
-    const yAxis: string[] = daily.time.map((item: string) =>
-      moment(item).format('MMM D')
-    );
-    const xAxis: number[] = daily.precipitation_probability_max;
+    return {
+      yAxis: daily.time.map((item: string) => moment(item).format('MMM D')),
+      xAxis: daily.precipitation_probability_max,
+      units: daily_units.precipitation_probability_max,
+    };
+  }, [weather])!;
 
-    const mes = daily_units.precipitation_probability_max;
+  useEffect(() => {
+    if (!chartData && !todayRef.current) return;
+
+    // const daily = weather?.daily;
+    // const daily_units = weather?.daily_units;
+    // if (!daily || !daily_units) return;
+
+    // const yAxis: string[] = daily.time.map((item: string) =>
+    //   moment(item).format('MMM D')
+    // );
+    // const xAxis: number[] = daily.precipitation_probability_max;
+
+    // const mes = daily_units.precipitation_probability_max;
 
     const trace: Partial<Plotly.Data>[] = [
       {
-        x: xAxis,
-        y: yAxis,
+        x: chartData.xAxis,
+        y: chartData.yAxis,
         type: 'bar',
         orientation: 'h',
         marker: { color: 'rgb(157,146,227)' },
-        hovertemplate: `(%{y}, %{x}${mes})<extra></extra>`,
+        hovertemplate: `(%{y}, %{x}${chartData.units})<extra></extra>`,
       },
     ];
 
@@ -49,7 +61,7 @@ export const RainChance = () => {
       },
       xaxis: {
         title: {
-          text: `Precipitation (${mes})`,
+          text: `Precipitation (${chartData.units})`,
           font: {
             family: 'Helvetica, Arial, sans-serif',
             size: 12,
@@ -90,7 +102,7 @@ export const RainChance = () => {
 
     if (todayRef.current)
       Plotly.newPlot(todayRef.current, trace, layout, config);
-  }, [weather]);
+  }, [chartData]);
 
   if (!weather) {
     return <p>Loading...</p>;

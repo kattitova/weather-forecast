@@ -24,7 +24,7 @@ export const temperatureChartSettings = (
   },
 });
 
-export const temperatureLayoutSettings = (legenda: boolean) => ({
+export const temperatureLayoutSettings = (legend: boolean, title: string) => ({
   margin: {
     l: 50,
     r: 10,
@@ -33,7 +33,7 @@ export const temperatureLayoutSettings = (legenda: boolean) => ({
   },
   xaxis: {
     title: {
-      text: 'Time',
+      text: title,
       font: {
         family: 'Helvetica, Arial, sans-serif',
         size: 12,
@@ -51,7 +51,7 @@ export const temperatureLayoutSettings = (legenda: boolean) => ({
     },
   },
   height: 200,
-  showlegend: legenda,
+  showlegend: legend,
   legend: {
     orientation: 'h',
     x: 0.5,

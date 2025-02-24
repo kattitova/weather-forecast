@@ -22,6 +22,7 @@ interface Current {
 interface Hourlyunits {
   time: string;
   temperature_2m: string;
+  precipitation_probability: string;
 }
 
 interface Hourly {

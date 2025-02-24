@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { CurrentCityData, RootState } from '../../store';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import Plotly from 'plotly.js-dist';
 import moment from 'moment';
 import {
@@ -21,48 +21,55 @@ export const TemperatureChart: React.FC<IProps> = ({ period }: IProps) => {
 
   const { weather } = city;
 
-  useEffect(() => {
-    if (!weather && !todayRef.current) return;
-
+  const chartData = useMemo(() => {
     const daily = weather?.daily;
     const hourly = weather?.hourly;
     if (!daily || !hourly) return;
 
-    let xAxis: string[];
-    let yAxis: number[];
-    let yAxis1: number[] = [];
-
-    switch (period) {
-      case 'today':
-        xAxis = hourly.time
+    if (period === 'today') {
+      return {
+        xAxis: hourly.time
           .slice(0, 24)
-          .map((item: string) => moment(item).format('h a'));
-        yAxis = hourly.temperature_2m.slice(0, 24);
-        break;
-      case 'week':
-        xAxis = daily.time.map((item: string) => moment(item).format('MMM D'));
-        yAxis = daily.temperature_2m_max;
-        yAxis1 = daily.temperature_2m_min;
-        break;
-      default:
-        return;
+          .map((item: string) => moment(item).format('h a')),
+        yAxis: hourly.temperature_2m.slice(0, 24),
+        yAxisWeek: [],
+        showLegend: false,
+        title: 'Time',
+      };
     }
 
+    return {
+      xAxis: daily.time.map((item: string) => moment(item).format('MMM D')),
+      yAxis: daily.temperature_2m_max,
+      yAxisWeek: daily.temperature_2m_min,
+      showLegend: true,
+      title: 'Days',
+    };
+  }, [weather, period])!;
+
+  useEffect(() => {
+    if (!chartData && !todayRef.current) return;
+
     const trace1 = temperatureChartSettings(
-      xAxis,
-      yAxis,
+      chartData.xAxis,
+      chartData.yAxis,
       'rgb(157,146,227)',
       period === 'today' ? 'tonexty' : 'none',
       period === 'today' ? '' : 'Max Temperature'
     );
+
     const trace2 = temperatureChartSettings(
-      xAxis,
-      yAxis1,
+      chartData.xAxis,
+      chartData.yAxisWeek,
       'rgb(163, 28, 77)',
       'none',
       'Min Temperature'
     );
-    const layout = temperatureLayoutSettings(period === 'today' ? false : true);
+
+    const layout = temperatureLayoutSettings(
+      chartData.showLegend,
+      chartData.title
+    );
 
     const data = period === 'today' ? [trace1] : [trace1, trace2];
 
@@ -72,7 +79,7 @@ export const TemperatureChart: React.FC<IProps> = ({ period }: IProps) => {
 
     if (todayRef.current)
       Plotly.newPlot(todayRef.current, data, layout, config);
-  }, [weather, period]);
+  }, [chartData, period]);
 
   if (!weather) {
     return <p>Loading...</p>;
