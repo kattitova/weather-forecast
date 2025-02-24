@@ -56,3 +56,9 @@ export const CurrentTemp = styled.div`
     font-size: 12px;
   }
 `;
+
+export const CityCardHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;

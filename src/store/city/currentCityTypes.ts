@@ -6,6 +6,8 @@ export interface CurrentCityData {
   countryCode: string;
   latitude: number;
   longitude: number;
+  image: string;
+  pin: boolean;
   weather: ApiWeatherData | null;
 }
 

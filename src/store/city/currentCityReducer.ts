@@ -12,6 +12,8 @@ const initialData: CurrentCityData = {
   countryCode: 'UA',
   latitude: 50.4547,
   longitude: 30.5238,
+  image: 'kyiv.jpg',
+  pin: true,
   weather: null,
 };
 
