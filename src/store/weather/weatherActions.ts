@@ -4,13 +4,10 @@ import {
   GET_WEATHER_SUCCESS,
   WeatherActionTypes,
 } from './weatherTypes';
-import axios from 'axios';
 import { ThunkDispatch } from 'redux-thunk';
 import { RootState } from '../store';
-
-const api = axios.create({
-  baseURL: 'https://api.open-meteo.com/v1',
-});
+import { params, url } from '../../api';
+import axios from 'axios';
 
 export const getWeather = (
   lat: number,
@@ -33,9 +30,7 @@ export const getWeather = (
     dispatch({ type: GET_WEATHER_REQUEST });
 
     try {
-      const response = await api.get(
-        `/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation,rain,weather_code,wind_speed_10m&hourly=temperature_2m,precipitation_probability&daily=weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset,precipitation_probability_max,wind_speed_10m_max`
-      );
+      const response = await axios.get(url, params(lat, lon));
 
       const weatherData = {
         id: cityID,

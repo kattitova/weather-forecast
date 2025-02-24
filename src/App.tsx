@@ -43,11 +43,10 @@ function App() {
         <img src='logo.png' alt='logo' />
         <h1>Weather Forecast</h1>
         <input type='text' placeholder='Search city ...' />
-
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
       </header>
       <main>
+        {loading && <p>Loading...</p>}
+        {error && <p>Error: {error}</p>}
         <div>
           <S.CitiesWrapper>
             <CityCard />

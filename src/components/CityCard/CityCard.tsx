@@ -10,7 +10,7 @@ export const CityCard = () => {
   );
 
   const { cityName, countryCode, weather } = city;
-  console.log('code', countryCode);
+
   if (!weather) {
     return <p>Loading...</p>;
   }
