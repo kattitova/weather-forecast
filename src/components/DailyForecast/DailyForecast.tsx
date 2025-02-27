@@ -28,8 +28,8 @@ export const DailyForecast: React.FC<IProps> = ({ daysData }: IProps) => {
         </div>
       </S.TemperatureWrapper>
       <S.DayWrapper>
-        {moment(day).format('dddd')}
         <WeatherIcon weatherCode={weatherCode} />
+        {moment(day).format('dddd')}
       </S.DayWrapper>
     </S.StyledWrapper>
   );

@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { DailyForecast } from '../DailyForecast';
 import * as S from './styled';
-import { CurrentCityData, RootState } from '../../store';
+import { RootState } from '../../store';
+import { CurrentCityData } from '../../store/cities/citiesTypes';
 
 export interface IThreeDaysForecast {
   day: string;
@@ -12,11 +13,12 @@ export interface IThreeDaysForecast {
 }
 
 export const ThreeDaysForecast = () => {
-  const city: CurrentCityData = useSelector(
-    (state: RootState) => state.currentCity.city
+  const currentCity = useSelector((state: RootState) =>
+    state.cities.cities.find((city: CurrentCityData) => city.pin)
   );
 
-  const { weather } = city;
+  if (!currentCity) return;
+  const { weather } = currentCity;
   if (!weather) return;
   const { daily, daily_units } = weather;
 

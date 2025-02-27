@@ -1,7 +1,8 @@
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import moment from 'moment';
-import { CurrentCityData, RootState } from '../store';
+import { RootState } from '../store';
+import { CurrentCityData } from '../store/cities/citiesTypes';
 
 type ChartType = 'temperature' | 'precipitation';
 type PeriodType = 'today' | 'week';
@@ -16,11 +17,11 @@ export interface IChartData {
 }
 
 export const useChartData = (type: ChartType, period?: PeriodType) => {
-  const city: CurrentCityData = useSelector(
-    (state: RootState) => state.currentCity.city
+  const currentCity = useSelector((state: RootState) =>
+    state.cities.cities.find((city: CurrentCityData) => city.pin)
   );
 
-  const { weather } = city;
+  const weather = currentCity?.weather;
 
   return useMemo(() => {
     if (!weather) return;

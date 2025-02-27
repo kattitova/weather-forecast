@@ -1,14 +1,17 @@
 import { useSelector } from 'react-redux';
-import { CurrentCityData, RootState } from '../../store';
+import { RootState } from '../../store';
 import * as S from './styled';
 import moment from 'moment';
+import { CurrentCityData } from '../../store/cities/citiesTypes';
 
 export const TodayHighlightsWrapper = () => {
-  const city: CurrentCityData = useSelector(
-    (state: RootState) => state.currentCity.city
+  const currentCity = useSelector((state: RootState) =>
+    state.cities.cities.find((city: CurrentCityData) => city.pin)
   );
-
-  const { weather } = city;
+  if (!currentCity) {
+    return <p>Loading...</p>;
+  }
+  const { weather } = currentCity;
   if (!weather) {
     return <p>Loading...</p>;
   }

@@ -1,23 +1,16 @@
 import {
   AnyAction,
-  applyMiddleware,
   combineReducers,
   legacy_createStore as createStore,
 } from 'redux';
-import { thunk, ThunkDispatch, ThunkMiddleware } from 'redux-thunk';
-import { weatherReducer } from './weather/weatherReducer';
-import { WeatherActionTypes } from './weather/weatherTypes';
-import { currentCityReducer } from './city/currentCityReducer';
+import { ThunkDispatch } from 'redux-thunk';
+import { citiesReducer } from './cities/citiesReducer';
 
 export const RootReducer = combineReducers({
-  weather: weatherReducer,
-  currentCity: currentCityReducer,
+  cities: citiesReducer,
 });
 
-export const store = createStore(
-  RootReducer,
-  applyMiddleware(thunk as ThunkMiddleware<RootState, WeatherActionTypes>)
-);
+export const store = createStore(RootReducer);
 
 export type RootState = ReturnType<typeof RootReducer>;
 export type AppDispatch = ThunkDispatch<RootState, void, AnyAction>;

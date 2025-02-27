@@ -1,21 +1,20 @@
 import * as S from './styled';
-import { CurrentCityData, RootState } from '../../store';
+import { RootState } from '../../store';
 import moment from 'moment';
 import { WeatherIcon } from '../WeatherIcon';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { DropDownList } from '../DropDownList';
+import { CurrentCityData } from './../../store/cities/citiesTypes';
+import { CitySelect, SelectRender } from '../CitySelect';
 
 export const CityCard = () => {
-  const city: CurrentCityData = useSelector(
-    (state: RootState) => state.currentCity.city
+  const currentCity = useSelector((state: RootState) =>
+    state.cities.cities.find((city: CurrentCityData) => city.pin)
   );
 
-  useEffect(() => {
-    localStorage.setItem('cities', JSON.stringify([city]));
-  }, [city]);
+  if (!currentCity) return;
 
-  const { cityName, countryCode, weather, image } = city;
+  const { cityName, countryCode, weather, image } = currentCity;
 
   if (!weather) {
     return <p>Loading...</p>;
@@ -30,7 +29,10 @@ export const CityCard = () => {
         <h2>
           {cityName}, {countryCode}
         </h2>
-        <DropDownList />
+        <DropDownList
+          SelectComponent={CitySelect}
+          RenderComponent={SelectRender}
+        />
       </S.CityCardHeader>
       <section>
         <WeatherIcon weatherCode={current.weather_code} />

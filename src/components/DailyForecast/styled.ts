@@ -30,12 +30,13 @@ export const TemperatureWrapper = styled.div`
 `;
 
 export const DayWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-content: center;
   width: 50%;
-  gap: 10px;
   font-weight: 600;
+  text-align: center;
 
   div {
     margin-right: 0;

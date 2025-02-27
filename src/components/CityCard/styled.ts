@@ -12,7 +12,7 @@ export const CityCard = styled.div`
 
   section {
     position: absolute;
-    top: 40px;
+    top: 38px;
     color: #fff;
     display: flex;
     gap: 10px;
@@ -20,6 +20,13 @@ export const CityCard = styled.div`
     justify-content: flex-end;
     padding: 10px 25px;
     align-items: center;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background: linear-gradient(
+      180deg,
+      rgba(34, 4, 61, 0.6019199916294643) 0%,
+      rgba(255, 255, 255, 0) 75%
+    );
 
     img {
       width: 50px;
