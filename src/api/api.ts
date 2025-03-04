@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export const url = 'https://api.open-meteo.com/v1/forecast';
+export const weatherUrl = 'https://api.open-meteo.com/v1/forecast';
 
-export const params = (lat: number, lon: number) => ({
+export const weatherParams = (lat: number, lon: number) => ({
   params: {
     latitude: lat,
     longitude: lon,
@@ -14,33 +14,16 @@ export const params = (lat: number, lon: number) => ({
   },
 });
 
-export const getWeather = async (lat: number, lon: number) => {
-  try {
-    const response = await axios.get(url, params(lat, lon));
-    return response.data;
-  } catch (error) {
-    console.log('Error fetch weather', error);
-  }
-};
+export const citiesUrl = 'https://geocoding-api.open-meteo.com/v1/search';
 
-export const getCities = async (cityName: string) => {
-  const cityUrl = 'https://geocoding-api.open-meteo.com/v1/search';
-  const params = {
-    params: {
-      name: cityName,
-      count: 10,
-      language: 'en',
-      format: 'json',
-    },
-  };
-
-  try {
-    const response = await axios.get(cityUrl, params);
-    return response.data;
-  } catch (error) {
-    console.log('Error API Get City', error);
-  }
-};
+export const citiesParams = (name: string) => ({
+  params: {
+    name: name,
+    count: 10,
+    language: 'en',
+    format: 'json',
+  },
+});
 
 export const getImage = async (cityName: string) => {
   const API_KEY = '6j8Sb6xo1VOeEIVYxolnmnjK72lBJMUHMjRzQmg86zk';

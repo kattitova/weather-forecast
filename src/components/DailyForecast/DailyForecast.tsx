@@ -2,6 +2,7 @@ import moment from 'moment';
 import { IThreeDaysForecast } from '../ThreeDaysForecast';
 import * as S from './styled';
 import { WeatherIcon } from '../WeatherIcon';
+import { DATE_FORMATS } from '../../constants/dateFormats';
 
 interface IProps {
   daysData: IThreeDaysForecast;
@@ -18,18 +19,14 @@ export const DailyForecast: React.FC<IProps> = ({ daysData }: IProps) => {
           {unit}
         </div>
         <div>
-          <img
-            src='./assets/arrow.png'
-            alt='min temperature'
-            style={{ rotate: '180deg' }}
-          />
           {minTemperature}
           {unit}
+          <img src='./assets/arrow.png' alt='min temperature' />
         </div>
       </S.TemperatureWrapper>
       <S.DayWrapper>
         <WeatherIcon weatherCode={weatherCode} />
-        {moment(day).format('dddd')}
+        {moment(day).format(DATE_FORMATS.DAY)}
       </S.DayWrapper>
     </S.StyledWrapper>
   );

@@ -20,6 +20,12 @@ export const TemperatureWrapper = styled.div`
     display: flex;
     align-items: center;
     gap: 3px;
+
+    & + :last-child {
+      img {
+        rotate: 180deg;
+      }
+    }
   }
 
   img {

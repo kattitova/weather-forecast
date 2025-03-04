@@ -1,9 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { getCities } from '../../api';
 import * as S from './styled';
 import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
-import { setSearchCities } from '../../store/cities/citiesActions';
+import { getSearchCities } from '../../store/searchCities/thunks';
+import { PHRASES } from '../../constants/phrases';
 
 interface IProps {
   onClick: () => void;
@@ -19,29 +19,19 @@ export const SearchCityInput: React.FC<IProps> = ({
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
-    if (/^[a-zA-Z]*$/.test(value)) {
+    if (/^[a-zA-Z-\s]*$/.test(value)) {
       setInputValue(value);
     }
   };
 
-  const [searchCitiesList, setSearchCitiesList] = useState([]);
-
   useEffect(() => {
-    const fetchCities = async () => {
-      const data = await getCities(inputValue);
-      setSearchCitiesList(data.results);
-    };
-
-    if (inputValue.length > 1) {
-      fetchCities();
+    if (inputValue.length > 2) {
+      dispatch(getSearchCities(inputValue));
     }
-  }, [inputValue]);
 
-  useEffect(() => {
-    dispatch(setSearchCities(searchCitiesList));
     if (inputValue.length > 1 && status === 'close') onClick();
     if (inputValue.length < 2 && status === 'open') onClick();
-  }, [searchCitiesList, inputValue]);
+  }, [inputValue]);
 
   useEffect(() => {
     if (status === 'close') setInputValue('');
@@ -50,7 +40,7 @@ export const SearchCityInput: React.FC<IProps> = ({
   return (
     <S.StyledInput
       type='text'
-      placeholder='Search city ...'
+      placeholder={PHRASES.SEARCH_CITY}
       value={inputValue}
       onChange={handleChange}
     />

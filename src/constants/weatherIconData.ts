@@ -1,4 +1,4 @@
-export const weatherIconData = {
+export const WEATHER_ICON_DATA = {
   icon0: 'Clear sky',
   icon1: 'Mainly clear',
   icon2: 'Partly cloudy',

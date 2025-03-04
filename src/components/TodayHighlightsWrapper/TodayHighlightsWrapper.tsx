@@ -1,54 +1,47 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import * as S from './styled';
 import moment from 'moment';
-import { CurrentCityData } from '../../store/cities/citiesTypes';
+import { PHRASES } from '../../constants/phrases';
+import { DATE_FORMATS } from '../../constants/dateFormats';
+import { selectWeather } from '../../store/weather/selectors';
 
 export const TodayHighlightsWrapper = () => {
-  const currentCity = useSelector((state: RootState) =>
-    state.cities.cities.find((city: CurrentCityData) => city.pin)
-  );
-  if (!currentCity) {
-    return <p>Loading...</p>;
-  }
-  const { weather } = currentCity;
-  if (!weather) {
-    return <p>Loading...</p>;
-  }
+  const weather = useSelector(selectWeather);
+  if (!weather) return;
   const { current, current_units, daily } = weather;
 
   return (
     <S.StyledWrapper>
-      <h3>Today's Highlights</h3>
+      <h3>{PHRASES.TODAYS_HIGHLIGHTS}</h3>
       <S.StyledHighlights>
         <div>
-          <p>Precipitation</p>
+          <p>{PHRASES.PRECIPITATION}</p>
           <span>
             {current.precipitation}
             {current_units.precipitation}
           </span>
         </div>
         <div>
-          <p>Relative Humidity</p>
+          <p>{PHRASES.RELATIVE_HUMIDITY}</p>
           <span>
             {current.relative_humidity_2m}
             {current_units.relative_humidity_2m}
           </span>
         </div>
         <div>
-          <p>Wind</p>
+          <p>{PHRASES.WIND}</p>
           <span>
             {current.wind_speed_10m}
             {current_units.wind_speed_10m}
           </span>
         </div>
         <div>
-          <p>Sunrise & Sunset</p>
+          <p>{PHRASES.SUNRISE_SUNSET}</p>
           <span>
-            <img src='./assets/arrow.png' />{' '}
-            {moment(daily.sunrise[0]).format('h:mm a')}
-            <img src='./assets/arrow.png' />{' '}
-            {moment(daily.sunset[0]).format('h:mm a')}
+            <img src='./assets/arrow.png' />
+            {moment(daily.sunrise[0]).format(DATE_FORMATS.TIME)}
+            <img src='./assets/arrow.png' />
+            {moment(daily.sunset[0]).format(DATE_FORMATS.TIME)}
           </span>
         </div>
       </S.StyledHighlights>

@@ -1,4 +1,4 @@
-interface Currentunits {
+export interface ICurrentUnitsResponse {
   time: string;
   interval: string;
   temperature_2m: string;
@@ -8,7 +8,7 @@ interface Currentunits {
   relative_humidity_2m: string;
 }
 
-interface Current {
+export interface ICurrentResponse {
   time: string;
   interval: number;
   temperature_2m: number;
@@ -19,19 +19,19 @@ interface Current {
   relative_humidity_2m: number;
 }
 
-interface Hourlyunits {
+export interface IHourlyUnitsResponse {
   time: string;
   temperature_2m: string;
   precipitation_probability: string;
 }
 
-interface Hourly {
+export interface IHourlyResponse {
   time: string[];
   temperature_2m: number[];
   precipitation_probability: number[];
 }
 
-interface Dailyunits {
+export interface IDailyUnitsResponse {
   time: string;
   sunrise: string;
   sunset: string;
@@ -42,7 +42,7 @@ interface Dailyunits {
   precipitation_probability_max: number;
 }
 
-interface Daily {
+export interface IDailyResponse {
   time: string[];
   sunrise: string[];
   sunset: string[];
@@ -53,7 +53,7 @@ interface Daily {
   weather_code: number[];
 }
 
-export interface ApiWeatherData {
+export interface IWeatherDataResponse {
   latitude: number;
   longitude: number;
   generationtime_ms: number;
@@ -61,15 +61,15 @@ export interface ApiWeatherData {
   timezone: string;
   timezone_abbreviation: string;
   elevation: number;
-  current_units: Currentunits;
-  current: Current;
-  hourly_units: Hourlyunits;
-  hourly: Hourly;
-  daily_units: Dailyunits;
-  daily: Daily;
+  current_units: ICurrentUnitsResponse;
+  current: ICurrentResponse;
+  hourly_units: IHourlyUnitsResponse;
+  hourly: IHourlyResponse;
+  daily_units: IDailyUnitsResponse;
+  daily: IDailyResponse;
 }
 
-export interface SearchCity {
+export interface ISearchCityResponse {
   id: number;
   name: string;
   latitude: number;

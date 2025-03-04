@@ -1,27 +1,40 @@
 import * as S from './styled';
-import { RootState } from '../../store';
 import moment from 'moment';
 import { WeatherIcon } from '../WeatherIcon';
 import { useSelector } from 'react-redux';
 import { DropDownList } from '../DropDownList';
-import { CurrentCityData } from './../../store/cities/citiesTypes';
 import { CitySelect, SelectRender } from '../CitySelect';
+import { PHRASES } from '../../constants/phrases';
+import { DATE_FORMATS } from '../../constants/dateFormats';
+import {
+  selectCurrentCityCountryCode,
+  selectCurrentCityImage,
+  selectCurrentCityName,
+} from '../../store/cities/selectors';
+import {
+  selectWeatherCurrent,
+  selectWeatherCurrentUnits,
+  selectWeatherLoading,
+} from '../../store/weather/selectors';
+import { ICurrentResponse, ICurrentUnitsResponse } from '../../types/api/types';
 
 export const CityCard = () => {
-  const currentCity = useSelector((state: RootState) =>
-    state.cities.cities.find((city: CurrentCityData) => city.pin)
+  const loading = useSelector(selectWeatherLoading);
+
+  const cityName = useSelector(selectCurrentCityName);
+  const countryCode = useSelector(selectCurrentCityCountryCode);
+  const image = useSelector(selectCurrentCityImage);
+
+  const current: ICurrentResponse = useSelector(selectWeatherCurrent);
+  const current_units: ICurrentUnitsResponse = useSelector(
+    selectWeatherCurrentUnits
   );
 
-  if (!currentCity) return;
-
-  const { cityName, countryCode, weather, image } = currentCity;
-
-  if (!weather) {
-    return <p>Loading...</p>;
+  if (loading) {
+    return <p>{PHRASES.LOADING}</p>;
   }
-  const { current, current_units } = weather;
 
-  const todayData: string = moment().format('dddd, h:mm a');
+  const todayData: string = moment().format(DATE_FORMATS.DAY_TIME);
 
   return (
     <S.CityCard>
@@ -41,7 +54,7 @@ export const CityCard = () => {
           <span>{current_units['temperature_2m']}</span>
         </S.CurrentTemp>
         <S.StyledData>
-          <p>{moment().format('MMMM D YYYY')}</p>
+          <p>{moment().format(DATE_FORMATS.REGULAR)}</p>
           <p>{todayData}</p>
         </S.StyledData>
       </section>

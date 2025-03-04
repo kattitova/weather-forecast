@@ -1,12 +1,13 @@
 import { useEffect, useRef } from 'react';
 import Plotly from 'plotly.js-dist';
 import * as S from './styled';
-import { useChartData } from '../../hooks';
+import { usePrecipitationChartData } from '../../hooks';
+import { PHRASES } from '../../constants/phrases';
 
-export const RainChance = () => {
+export const PrecipitationChance = () => {
   const todayRef = useRef<HTMLDivElement>(null);
 
-  const chartData = useChartData('precipitation');
+  const chartData = usePrecipitationChartData();
 
   useEffect(() => {
     if (!chartData && !todayRef.current) return;
@@ -32,7 +33,7 @@ export const RainChance = () => {
       },
       xaxis: {
         title: {
-          text: `Precipitation (${chartData.units})`,
+          text: `${PHRASES.PRECIPITATION} (${chartData.units})`,
           font: {
             family: 'Helvetica, Arial, sans-serif',
             size: 12,
@@ -41,7 +42,11 @@ export const RainChance = () => {
         range: [0, 100],
         tickmode: 'array',
         tickvals: [0, 50, 100],
-        ticktext: ['Sunny', 'Rainy', 'Heavy Rain'],
+        ticktext: [
+          PHRASES.TICK_TEXT_SUNNY,
+          PHRASES.TICK_TEXT_RAINY,
+          PHRASES.TICK_TEXT_HEAVY_RAIN,
+        ],
         showgrid: true,
         tickfont: {
           size: 10,
@@ -49,7 +54,7 @@ export const RainChance = () => {
       },
       yaxis: {
         title: {
-          text: 'Days',
+          text: PHRASES.DAYS,
           font: {
             family: 'Helvetica, Arial, sans-serif',
             size: 12,
@@ -76,12 +81,12 @@ export const RainChance = () => {
   }, [chartData]);
 
   if (!chartData) {
-    return <p>Loading...</p>;
+    return <p>{PHRASES.LOADING}</p>;
   }
 
   return (
     <S.StyledWrapper>
-      <h3>Chance of Precipitation</h3>
+      <h3>{PHRASES.CHANCE_OF_PRECIPITATION}</h3>
       <div ref={todayRef}></div>
     </S.StyledWrapper>
   );

@@ -3,8 +3,9 @@ import Plotly from 'plotly.js-dist';
 import {
   temperatureChartSettings,
   temperatureLayoutSettings,
-} from '../../types';
-import { IChartData, useChartData } from '../../hooks';
+} from '../../utils';
+import { ITemperatureChartData, useTemperatureChartData } from '../../hooks';
+import { PHRASES } from '../../constants/phrases';
 
 interface IProps {
   period: 'today' | 'week';
@@ -13,7 +14,7 @@ interface IProps {
 export const TemperatureChart: React.FC<IProps> = ({ period }: IProps) => {
   const todayRef = useRef<HTMLDivElement>(null);
 
-  const chartData: IChartData = useChartData('temperature', period);
+  const chartData: ITemperatureChartData = useTemperatureChartData(period);
 
   useEffect(() => {
     if (!chartData && !todayRef.current) return;
@@ -23,7 +24,7 @@ export const TemperatureChart: React.FC<IProps> = ({ period }: IProps) => {
       chartData.yAxis,
       'rgb(157,146,227)',
       period === 'today' ? 'tonexty' : 'none',
-      period === 'today' ? '' : 'Max Temperature'
+      period === 'today' ? '' : PHRASES.MAX_TEMPERATURE
     );
 
     const trace2 = temperatureChartSettings(
@@ -31,7 +32,7 @@ export const TemperatureChart: React.FC<IProps> = ({ period }: IProps) => {
       chartData.yAxisWeek || [],
       'rgb(163, 28, 77)',
       'none',
-      'Min Temperature'
+      PHRASES.MIN_TEMPERATURE
     );
 
     const layout = temperatureLayoutSettings(
@@ -49,7 +50,7 @@ export const TemperatureChart: React.FC<IProps> = ({ period }: IProps) => {
       Plotly.newPlot(todayRef.current, data, layout, config);
   }, [chartData, period]);
 
-  if (!chartData) return <p>Loading...</p>;
+  if (!chartData) return <p>{PHRASES.LOADING}</p>;
 
   return <div ref={todayRef}></div>;
 };

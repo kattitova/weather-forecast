@@ -1,48 +1,50 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from './store';
+import { AppDispatch } from './store';
 import * as S from './styled';
 import { CityCard } from './components/CityCard';
 import { TodayHighlightsWrapper } from './components/TodayHighlightsWrapper';
 import { TemperatureChartWrapper } from './components/TemperatureChartWrapper';
-import { RainChance } from './components/RainChance';
+import { PrecipitationChance } from './components/PrecipitationChance';
 import { ThreeDaysForecast } from './components/ThreeDaysForecast';
-import { CitiesState, CurrentCityData } from './store/cities/citiesTypes';
-import { addCity, setCities } from './store/cities/citiesActions';
-import { initialCityData } from './store/cities/citiesReducer';
+import { ICurrentCityData } from './types/store/cities/types';
+import { addCity, setCities } from './store/cities/actions';
+import { initialCityData } from './store/cities/reducer';
 import { SearchCityInput, SearchRender } from './components/SearchCityInput';
 import { DropDownList } from './components/DropDownList';
-import { getWeather } from './api';
+import { selectCitiesList, selectCurrentCity } from './store/cities/selectors';
+import { useLocalStorage } from './hooks/useLocalStorage';
+import { getWeather } from './store/weather/thunks';
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
 
-  const citiesList: CitiesState = useSelector(
-    (state: RootState) => state.cities
-  );
+  const citiesList: ICurrentCityData[] = useSelector(selectCitiesList);
+  const currentCity: ICurrentCityData = useSelector(selectCurrentCity);
 
   const [updatedCities, setUpdatedCities] = useState(false);
 
+  const [savedCities, setSavedCities] = useLocalStorage<ICurrentCityData[]>(
+    'cities',
+    []
+  );
+
   useEffect(() => {
-    const savedCities = JSON.parse(localStorage.getItem('cities') || '[]');
     if (savedCities.length) dispatch(setCities(savedCities));
     else dispatch(addCity(initialCityData));
     setUpdatedCities(true);
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    Promise.all(
-      citiesList.cities.map(async (city: CurrentCityData) => {
-        const weatherData = await getWeather(city.latitude, city.longitude);
-        return { ...city, weather: weatherData };
-      })
-    ).then((updatedCities) => {
-      if (updatedCities) {
-        dispatch(setCities(updatedCities));
-        setUpdatedCities(false);
-      }
-    });
-  }, [dispatch, updatedCities]);
+    const { latitude, longitude } = currentCity;
+    dispatch(getWeather(latitude, longitude));
+  }, [updatedCities, currentCity]);
+
+  useEffect(() => {
+    if (citiesList.length > 0) {
+      setSavedCities(citiesList);
+    }
+  }, [citiesList, setSavedCities]);
 
   return (
     <S.Wrapper>
@@ -63,7 +65,7 @@ function App() {
           <TemperatureChartWrapper />
         </div>
         <S.RightBar>
-          <RainChance />
+          <PrecipitationChance />
           <ThreeDaysForecast />
         </S.RightBar>
       </main>

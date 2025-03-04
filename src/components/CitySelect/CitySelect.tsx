@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 import * as S from './styled';
-import { CitiesState, CurrentCityData } from '../../store/cities/citiesTypes';
+import { selectCurrentCity } from '../../store/cities/selectors';
 
 interface ISelectProps {
   onClick: () => void;
@@ -9,22 +8,12 @@ interface ISelectProps {
 }
 
 export const CitySelect: React.FC<ISelectProps> = ({ onClick, status }) => {
-  const citiesList: CitiesState = useSelector(
-    (state: RootState) => state.cities
-  );
-
-  const pinnedCity = citiesList.cities.find(
-    (city: CurrentCityData) => city.pin
-  );
-
-  if (!pinnedCity) {
-    return <p>Loading...</p>;
-  }
+  const pinnedCity = useSelector(selectCurrentCity);
 
   return (
     <S.CitySelect onClick={onClick}>
       {pinnedCity.cityName}
-      <S.Button $status={status}></S.Button>
+      <S.Button $status={status} />
     </S.CitySelect>
   );
 };

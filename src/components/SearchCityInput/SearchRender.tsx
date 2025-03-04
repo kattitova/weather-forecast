@@ -1,10 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { CitiesState, CurrentCityData } from '../../store/cities/citiesTypes';
-import { AppDispatch, RootState } from '../../store';
-import { useEffect } from 'react';
-import { addCity, setCurrentCity } from '../../store/cities/citiesActions';
-import { getImage, getWeather } from '../../api';
-import { SearchCity } from '../../api/apiResponseType';
+import { ICurrentCityData } from '../../types/store/cities/types';
+import { AppDispatch } from '../../store';
+import { addCity, setCurrentCity } from '../../store/cities/actions';
+import { getImage } from '../../api';
+import { ISearchCityResponse } from '../../types/api/types';
+import {
+  selectSearchCities,
+  selectSearchCitiesLoading,
+} from '../../store/searchCities/selectors';
+import { PHRASES } from './../../constants/phrases';
 
 interface IRenderProps {
   onClick: () => void;
@@ -12,52 +16,22 @@ interface IRenderProps {
 
 export const SearchRender: React.FC<IRenderProps> = ({ onClick }) => {
   const dispatch: AppDispatch = useDispatch();
-  const citiesList: CitiesState = useSelector(
-    (state: RootState) => state.cities
-  );
 
-  const { cities } = citiesList;
+  const searchCities: ISearchCityResponse[] = useSelector(selectSearchCities);
+  const loading: boolean = useSelector(selectSearchCitiesLoading);
 
-  useEffect(() => {
-    if (cities.length > 0) {
-      localStorage.setItem('cities', JSON.stringify(cities));
-    }
-  }, [cities]);
+  if (!searchCities) return <div>{PHRASES.NO_RESULTS}</div>;
+  if (loading) return <div>{PHRASES.LOADING}</div>;
 
-  const { searchCities } = citiesList;
-
-  if (!searchCities) return;
-
-  const handlerSelectCity = (searchCity: SearchCity) => {
+  const handlerSelectCity = (searchCity: ISearchCityResponse) => {
     const { id, name, country_code, latitude, longitude } = searchCity;
 
-    const imgData = async () => {
+    const getImageData = async () => {
       const data = await getImage(name);
       return data;
     };
 
-    const fetchWeather = async () => {
-      const data = await getWeather(latitude, longitude);
-      return data;
-    };
-
-    const createCity = async (src: string) => {
-      const weatherData = await fetchWeather();
-      const city: CurrentCityData = {
-        cityId: id,
-        cityName: name,
-        countryCode: country_code,
-        latitude: latitude,
-        longitude: longitude,
-        image: src,
-        pin: false,
-        weather: weatherData,
-      };
-
-      return city;
-    };
-
-    imgData()
+    getImageData()
       .then((data) => {
         const { results } = data;
         const resultsLength = results.length;
@@ -68,8 +42,18 @@ export const SearchRender: React.FC<IRenderProps> = ({ onClick }) => {
         }
         return 'assets/noImage.jpg';
       })
-      .then((image) => createCity(image))
-      .then((city) => dispatch(addCity(city)))
+      .then((src) => {
+        const city: ICurrentCityData = {
+          cityId: id,
+          cityName: name,
+          countryCode: country_code,
+          latitude: latitude,
+          longitude: longitude,
+          image: src,
+          pin: false,
+        };
+        dispatch(addCity(city));
+      })
       .then(() => dispatch(setCurrentCity(id)));
 
     onClick();
@@ -77,7 +61,7 @@ export const SearchRender: React.FC<IRenderProps> = ({ onClick }) => {
 
   return (
     <>
-      {searchCities.map((city: SearchCity) => (
+      {searchCities.map((city: ISearchCityResponse) => (
         <div key={city.id} onClick={() => handlerSelectCity(city)}>
           {city.name}, {city.country}
         </div>

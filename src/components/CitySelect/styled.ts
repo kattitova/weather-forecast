@@ -22,3 +22,8 @@ export const Icons = styled.div`
   padding: 0 !important;
   width: 37px;
 `;
+
+export const DeleteIcon = styled.img<{ $pin: boolean }>`
+  opacity: ${(props) => (props.$pin ? '0.1' : '0.5')};
+  cursor: ${(props) => (props.$pin ? 'not-allowed' : 'pointer')};
+`;

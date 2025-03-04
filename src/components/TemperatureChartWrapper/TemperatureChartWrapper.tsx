@@ -1,18 +1,19 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import * as S from './styled';
 import { TemperatureChart } from '../TemperatureChart';
+import { PHRASES } from '../../constants/phrases';
 
 export const TemperatureChartWrapper = () => {
   return (
     <BrowserRouter>
       <S.StyledWrapper>
-        <h3>Temperature Chart</h3>
+        <h3>{PHRASES.TEMPERATURE_CHART}</h3>
         <S.StyledTemperatureChart>
           <nav>
             <S.StyledLink to='/' end>
-              Today
+              {PHRASES.TODAY}
             </S.StyledLink>
-            <S.StyledLink to='/week-temperature'>Week</S.StyledLink>
+            <S.StyledLink to='/week-temperature'>{PHRASES.WEEK}</S.StyledLink>
           </nav>
           <Routes>
             <Route path='/' element={<TemperatureChart period='today' />} />
