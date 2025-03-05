@@ -6,7 +6,7 @@ const getWeatherState = (state: RootState) => state.weather;
 
 export const selectWeather = createSelector(
   getWeatherState,
-  (state) => state.weather
+  (state) => state.data
 );
 
 export const selectWeatherLoading = createSelector(

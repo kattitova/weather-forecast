@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../store';
-import { initialCityData } from './reducer';
+import { initialCityData } from '../../constants';
 
 const getCitiesState = (state: RootState) => state.cities;
 

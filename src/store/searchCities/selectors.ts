@@ -5,7 +5,7 @@ const getSearchCitiesState = (state: RootState) => state.searchCities;
 
 export const selectSearchCities = createSelector(
   getSearchCitiesState,
-  (state) => state.cities
+  (state) => state.data
 );
 
 export const selectSearchCitiesLoading = createSelector(

@@ -1,12 +1,6 @@
 import { IWeatherDataResponse } from '../../api/types';
 import * as types from '../../../store/weather/types';
 
-export interface IWeatherData {
-  weather: IWeatherDataResponse | null;
-  loading: boolean;
-  error: string | null;
-}
-
 interface IWeatherRequestAction {
   type: typeof types.GET_WEATHER_REQUEST;
 }

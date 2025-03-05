@@ -1,18 +1,17 @@
 import { AppDispatch } from '../store';
-import axios from 'axios';
-import { citiesUrl, citiesParams } from '../../api';
 import {
   getSearchCitiesFailure,
   getSearchCitiesRequest,
   getSearchCitiesSuccess,
 } from './actions';
+import * as api from '../../api';
 
 export const getSearchCities = (name: string) => {
   return async (dispatch: AppDispatch) => {
     dispatch(getSearchCitiesRequest());
 
     try {
-      const response = await axios.get(citiesUrl, citiesParams(name));
+      const response = await api.getSearchCities(name);
       dispatch(getSearchCitiesSuccess(response.data.results));
     } catch (error) {
       dispatch(getSearchCitiesFailure(`Error loading cities data ${error}`));

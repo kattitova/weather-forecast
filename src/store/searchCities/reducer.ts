@@ -1,11 +1,10 @@
-import {
-  ISearchCitiesActionTypes,
-  ISearchCitiesState,
-} from '../../types/store/searchCities/types';
+import { ISearchCityResponse } from '../../types/api/types';
+import { ISearchCitiesActionTypes } from '../../types/store/searchCities/types';
+import { IStoreAsyncElement } from '../../types/store/types';
 import * as types from './types';
 
-export const initialState: ISearchCitiesState = {
-  cities: [],
+const initialState: IStoreAsyncElement<ISearchCityResponse[]> = {
+  data: null,
   loading: false,
   error: null,
 };
@@ -13,10 +12,10 @@ export const initialState: ISearchCitiesState = {
 export const searchCitiesReducer = (
   state = initialState,
   action: ISearchCitiesActionTypes
-): ISearchCitiesState => {
+): IStoreAsyncElement<ISearchCityResponse[]> => {
   switch (action.type) {
     case types.SET_SEARCH_CITIES:
-      return { ...state, cities: action.payload };
+      return { ...state, data: action.payload };
 
     case types.GET_SEARCH_CITIES_REQUEST:
       return { ...state, loading: true, error: null };
@@ -25,7 +24,7 @@ export const searchCitiesReducer = (
       return {
         ...state,
         loading: false,
-        cities: action.payload,
+        data: action.payload,
       };
 
     case types.GET_SEARCH_CITIES_FAILURE:
