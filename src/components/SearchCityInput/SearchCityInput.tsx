@@ -10,10 +10,7 @@ interface IProps {
   status: string;
 }
 
-export const SearchCityInput: React.FC<IProps> = ({
-  onClick,
-  status,
-}: IProps) => {
+export const SearchCityInput: React.FC<IProps> = ({ onClick, status }) => {
   const [inputValue, setInputValue] = useState('');
   const dispatch: AppDispatch = useDispatch();
 

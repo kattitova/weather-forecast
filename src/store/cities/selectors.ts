@@ -2,16 +2,16 @@ import { createSelector } from 'reselect';
 import { RootState } from '../store';
 import { initialCityData } from '../../constants';
 
-const getCitiesState = (state: RootState) => state.cities;
+export const getCitiesState = (state: RootState) => state.cities;
 
 export const selectCitiesList = createSelector(
   getCitiesState,
-  (state) => state.cities
+  (state) => state.data
 );
 
 export const selectCurrentCity = createSelector(
   getCitiesState,
-  (state) => state.cities.find((city) => city.pin) || initialCityData
+  (state) => state.data.find((city) => city.pin) || initialCityData
 );
 
 export const selectCurrentCityName = createSelector(

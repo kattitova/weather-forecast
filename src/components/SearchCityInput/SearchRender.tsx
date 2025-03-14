@@ -17,7 +17,7 @@ interface IRenderProps {
 export const SearchRender: React.FC<IRenderProps> = ({ onClick }) => {
   const dispatch: AppDispatch = useDispatch();
 
-  const searchCities: ISearchCityResponse[] = useSelector(selectSearchCities);
+  const searchCities = useSelector(selectSearchCities);
   const loading: boolean = useSelector(selectSearchCitiesLoading);
 
   if (!searchCities) return <div>{PHRASES.NO_RESULTS}</div>;

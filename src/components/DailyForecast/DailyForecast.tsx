@@ -8,7 +8,7 @@ interface IProps {
   daysData: IThreeDaysForecast;
 }
 
-export const DailyForecast: React.FC<IProps> = ({ daysData }: IProps) => {
+export const DailyForecast: React.FC<IProps> = ({ daysData }) => {
   const { day, maxTemperature, minTemperature, weatherCode, unit } = daysData;
   return (
     <S.StyledWrapper>

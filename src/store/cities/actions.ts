@@ -26,10 +26,3 @@ export const removeCity = (id: number): IRemoveCityAction => ({
   type: types.REMOVE_CITY,
   payload: id,
 });
-
-// export const setSearchCities = (
-//   searchCity: ISearchCityResponse[]
-// ): ISetSearchCitiesAction => ({
-//   type: types.SET_SEARCH_CITIES,
-//   payload: searchCity,
-// });

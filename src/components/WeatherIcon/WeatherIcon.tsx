@@ -5,7 +5,7 @@ interface IProps {
   weatherCode: number;
 }
 
-export const WeatherIcon: React.FC<IProps> = ({ weatherCode }: IProps) => {
+export const WeatherIcon: React.FC<IProps> = ({ weatherCode }) => {
   const iconIndex = `icon${weatherCode}` as keyof typeof WEATHER_ICON_DATA;
   return (
     <S.WeatherIconWrapper>

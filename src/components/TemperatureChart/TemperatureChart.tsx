@@ -11,7 +11,7 @@ interface IProps {
   period: 'today' | 'week';
 }
 
-export const TemperatureChart: React.FC<IProps> = ({ period }: IProps) => {
+export const TemperatureChart: React.FC<IProps> = ({ period }) => {
   const todayRef = useRef<HTMLDivElement>(null);
 
   const chartData: ITemperatureChartData = useTemperatureChartData(period);

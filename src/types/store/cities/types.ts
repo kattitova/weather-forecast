@@ -8,24 +8,11 @@ export interface ICurrentCityData {
   longitude: number;
   image: string;
   pin: boolean;
-  // weather: IWeatherDataResponse | null;
 }
-
-// export interface ISearchCitiesData {
-//   cities: ISearchCityResponse[];
-//   loading: boolean;
-//   error: string | null;
-// }
 
 export interface ICitiesState {
-  cities: ICurrentCityData[];
-  // searchCities: ISearchCitiesData;
+  data: ICurrentCityData[];
 }
-
-// export interface ICitiesState {
-//   cities: ICurrentCityData[];
-//   searchCities: ISearchCityResponse[];
-// }
 
 export interface ISetCitiesAction {
   type: typeof types.SET_CITIES;
@@ -47,29 +34,8 @@ export interface IRemoveCityAction {
   payload: number;
 }
 
-// export interface ISetSearchCitiesAction {
-//   type: typeof types.SET_SEARCH_CITIES;
-//   payload: ISearchCityResponse[];
-// }
-
-// export interface IGetSearchCitiesFailureAction {
-//   type: typeof types.GET_SEARCH_CITIES_FAILURE;
-//   payload: string;
-// }
-// export interface IGetSearchCitiesRequestAction {
-//   type: typeof types.GET_SEARCH_CITIES_REQUEST;
-// }
-// export interface IGetSearchCitiesSuccessAction {
-//   type: typeof types.GET_SEARCH_CITIES_SUCCESS;
-//   payload: ISearchCityResponse[];
-// }
-
 export type ICitiesActionTypes =
   | ISetCitiesAction
   | IAddCityAction
   | IRemoveCityAction
   | ISetCurrentCityAction;
-// | ISetSearchCitiesAction
-// | IGetSearchCitiesFailureAction
-// | IGetSearchCitiesRequestAction
-// | IGetSearchCitiesSuccessAction;
