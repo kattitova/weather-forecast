@@ -7,12 +7,13 @@ import { selectCitiesList } from '../../store/cities/selectors';
 
 interface IRenderProps {
   onClick: () => void;
+  status: string;
 }
 
-export const SelectRender: React.FC<IRenderProps> = ({ onClick }) => {
+export const SelectRender: React.FC<IRenderProps> = ({ onClick, status }) => {
   const dispatch: AppDispatch = useDispatch();
 
-  const citiesList: ICurrentCityData[] = useSelector(selectCitiesList);
+  const citiesList = useSelector(selectCitiesList);
 
   const handlePinCity = (id: number) => {
     dispatch(setCurrentCity(id));
@@ -26,12 +27,19 @@ export const SelectRender: React.FC<IRenderProps> = ({ onClick }) => {
   };
 
   return (
-    <>
+    <S.DropDownList $status={status} data-status={status}>
       {citiesList.map((city: ICurrentCityData, index: number) => (
-        <div key={city.cityId} onClick={() => handlePinCity(city.cityId)}>
+        <S.DropDownItem
+          key={city.cityId}
+          onClick={() => handlePinCity(city.cityId)}
+        >
           {city.cityName}
           <S.Icons>
-            <img src='/assets/pin.png' alt='city pin' data-pin={city.pin} />
+            <S.PinIcon
+              src='/assets/pin.png'
+              alt='city pin'
+              data-pin={city.pin}
+            />
             <S.DeleteIcon
               $pin={city.pin}
               src='/assets/close.png'
@@ -39,8 +47,8 @@ export const SelectRender: React.FC<IRenderProps> = ({ onClick }) => {
               onClick={(e) => handleDeleteCity(e, city.cityId, index)}
             />
           </S.Icons>
-        </div>
+        </S.DropDownItem>
       ))}
-    </>
+    </S.DropDownList>
   );
 };

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../store';
 
-const getSearchCitiesState = (state: RootState) => state.searchCities;
+export const getSearchCitiesState = (state: RootState) => state.searchCities;
 
 export const selectSearchCities = createSelector(
   getSearchCitiesState,

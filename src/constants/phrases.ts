@@ -18,4 +18,6 @@ export const PHRASES = {
   RELATIVE_HUMIDITY: 'Relative Humidity',
   WIND: 'Wind',
   SUNRISE_SUNSET: 'Sunrise & Sunset',
+  TREE_DAYS_FORECAST: '3 Days Forecast',
+  WEATHER_FORECAST: 'Weather Forecast',
 };

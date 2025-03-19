@@ -10,23 +10,25 @@ interface IProps {
 
 export const DailyForecast: React.FC<IProps> = ({ daysData }) => {
   const { day, maxTemperature, minTemperature, weatherCode, unit } = daysData;
+  const weekDay = moment(day).format(DATE_FORMATS.DAY);
+
   return (
     <S.StyledWrapper>
       <S.TemperatureWrapper>
-        <div>
+        <S.TemperatureInfo>
           <img src='./assets/arrow.png' alt='max temperature' />
           {maxTemperature}
           {unit}
-        </div>
-        <div>
+        </S.TemperatureInfo>
+        <S.TemperatureInfo>
           {minTemperature}
           {unit}
           <img src='./assets/arrow.png' alt='min temperature' />
-        </div>
+        </S.TemperatureInfo>
       </S.TemperatureWrapper>
       <S.DayWrapper>
         <WeatherIcon weatherCode={weatherCode} />
-        {moment(day).format(DATE_FORMATS.DAY)}
+        {weekDay}
       </S.DayWrapper>
     </S.StyledWrapper>
   );

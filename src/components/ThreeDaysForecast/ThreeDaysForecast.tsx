@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import { DailyForecast } from '../DailyForecast';
 import * as S from './styled';
 import { selectWeather } from '../../store/weather/selectors';
+import { PHRASES } from '../../constants';
 
 export interface IThreeDaysForecast {
   day: string;
@@ -23,24 +24,21 @@ export const ThreeDaysForecast = () => {
   const weatherCode: number[] = daily.weather_code.slice(1, 4);
   const unit: string = daily_units.temperature_2m_max;
 
-  const threeDaysForecast: IThreeDaysForecast[] = days.map(
-    (day: string, i: number) => ({
+  const threeDaysForecast = days.map((day: string, i: number) => {
+    const dayData = {
       day,
       maxTemperature: maxTemperature[i],
       minTemperature: minTemperature[i],
       weatherCode: weatherCode[i],
       unit: unit,
-    })
-  );
+    };
+    return <DailyForecast key={i} daysData={dayData} />;
+  });
 
   return (
     <S.StyledWrapper>
-      <h3>3 Days Forecast</h3>
-      <section>
-        {threeDaysForecast.map((day: IThreeDaysForecast, i: number) => (
-          <DailyForecast key={i} daysData={day} />
-        ))}
-      </section>
+      <h3>{PHRASES.TREE_DAYS_FORECAST}</h3>
+      <S.ForecastWrapper>{threeDaysForecast}</S.ForecastWrapper>
     </S.StyledWrapper>
   );
 };

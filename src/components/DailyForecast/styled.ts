@@ -16,22 +16,22 @@ export const TemperatureWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  div {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-
-    & + :last-child {
-      img {
-        rotate: 180deg;
-      }
-    }
-  }
-
   img {
     width: 16px;
     filter: brightness(0) saturate(100%) invert(13%) sepia(27%) saturate(4885%)
       hue-rotate(220deg) brightness(89%) contrast(101%);
+  }
+`;
+
+export const TemperatureInfo = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  & + :last-child {
+    img {
+      rotate: 180deg;
+    }
   }
 `;
 

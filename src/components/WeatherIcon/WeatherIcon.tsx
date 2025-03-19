@@ -13,7 +13,7 @@ export const WeatherIcon: React.FC<IProps> = ({ weatherCode }) => {
         src={`./assets/weatherIcons/${weatherCode}.png`}
         alt={WEATHER_ICON_DATA[iconIndex]}
       />
-      <span>{WEATHER_ICON_DATA[iconIndex]}</span>
+      <S.WeatherIconText>{WEATHER_ICON_DATA[iconIndex]}</S.WeatherIconText>
     </S.WeatherIconWrapper>
   );
 };

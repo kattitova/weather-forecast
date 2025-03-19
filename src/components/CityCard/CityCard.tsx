@@ -2,8 +2,7 @@ import * as S from './styled';
 import moment from 'moment';
 import { WeatherIcon } from '../WeatherIcon';
 import { useSelector } from 'react-redux';
-import { DropDownList } from '../DropDownList';
-import { CitySelect, SelectRender } from '../CitySelect';
+import { CitySelect } from '../CitySelect';
 import { PHRASES } from '../../constants/phrases';
 import { DATE_FORMATS } from '../../constants/dateFormats';
 import {
@@ -16,7 +15,6 @@ import {
   selectWeatherCurrentUnits,
   selectWeatherLoading,
 } from '../../store/weather/selectors';
-import { ICurrentResponse, ICurrentUnitsResponse } from '../../types/api/types';
 
 export const CityCard = () => {
   const loading = useSelector(selectWeatherLoading);
@@ -25,40 +23,36 @@ export const CityCard = () => {
   const countryCode = useSelector(selectCurrentCityCountryCode);
   const image = useSelector(selectCurrentCityImage);
 
-  const current: ICurrentResponse = useSelector(selectWeatherCurrent);
-  const current_units: ICurrentUnitsResponse = useSelector(
-    selectWeatherCurrentUnits
-  );
+  const current = useSelector(selectWeatherCurrent);
+  const current_units = useSelector(selectWeatherCurrentUnits);
 
   if (loading) {
     return <p>{PHRASES.LOADING}</p>;
   }
 
-  const todayData: string = moment().format(DATE_FORMATS.DAY_TIME);
+  const todayDay = moment().format(DATE_FORMATS.REGULAR);
+  const todayData = moment().format(DATE_FORMATS.DAY_TIME);
 
   return (
     <S.CityCard>
       <S.CityCardHeader>
-        <h2>
+        <S.Title>
           {cityName}, {countryCode}
-        </h2>
-        <DropDownList
-          SelectComponent={CitySelect}
-          RenderComponent={SelectRender}
-        />
+        </S.Title>
+        <CitySelect />
       </S.CityCardHeader>
-      <section>
+      <S.WeatherInfo>
         <WeatherIcon weatherCode={current.weather_code} />
         <S.CurrentTemp>
           <p>{current['temperature_2m']}</p>
           <span>{current_units['temperature_2m']}</span>
         </S.CurrentTemp>
         <S.StyledData>
-          <p>{moment().format(DATE_FORMATS.REGULAR)}</p>
+          <p>{todayDay}</p>
           <p>{todayData}</p>
         </S.StyledData>
-      </section>
-      <img src={image} alt={cityName} />
+      </S.WeatherInfo>
+      <S.Background src={image} alt={cityName} />
     </S.CityCard>
   );
 };

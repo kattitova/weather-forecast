@@ -4,15 +4,19 @@ import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
 import { getSearchCities } from '../../store/searchCities/thunks';
 import { PHRASES } from '../../constants/phrases';
+import { SearchRender } from './SearchRender';
 
-interface IProps {
-  onClick: () => void;
-  status: string;
-}
-
-export const SearchCityInput: React.FC<IProps> = ({ onClick, status }) => {
+export const SearchCityInput = () => {
   const [inputValue, setInputValue] = useState('');
   const dispatch: AppDispatch = useDispatch();
+
+  const [dropDownListStatus, setDropDownListStatus] = useState('close');
+
+  const handleToggleDropDownList = () => {
+    setDropDownListStatus((prevState) =>
+      prevState === 'open' ? 'close' : 'open'
+    );
+  };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.currentTarget;
@@ -26,20 +30,28 @@ export const SearchCityInput: React.FC<IProps> = ({ onClick, status }) => {
       dispatch(getSearchCities(inputValue));
     }
 
-    if (inputValue.length > 1 && status === 'close') onClick();
-    if (inputValue.length < 2 && status === 'open') onClick();
+    if (inputValue.length > 1 && dropDownListStatus === 'close')
+      handleToggleDropDownList();
+    if (inputValue.length < 2 && dropDownListStatus === 'open')
+      handleToggleDropDownList();
   }, [inputValue]);
 
   useEffect(() => {
-    if (status === 'close') setInputValue('');
-  }, [status]);
+    if (dropDownListStatus === 'close') setInputValue('');
+  }, [dropDownListStatus]);
 
   return (
-    <S.StyledInput
-      type='text'
-      placeholder={PHRASES.SEARCH_CITY}
-      value={inputValue}
-      onChange={handleChange}
-    />
+    <S.Wrapper>
+      <S.StyledInput
+        type='text'
+        placeholder={PHRASES.SEARCH_CITY}
+        value={inputValue}
+        onChange={handleChange}
+      />
+      <SearchRender
+        onClick={handleToggleDropDownList}
+        status={dropDownListStatus}
+      />
+    </S.Wrapper>
   );
 };

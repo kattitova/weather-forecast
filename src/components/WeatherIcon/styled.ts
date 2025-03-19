@@ -9,8 +9,8 @@ export const WeatherIconWrapper = styled.div`
   font-size: 16px;
   margin-right: auto;
   gap: 5px;
+`;
 
-  span {
-    font-size: 12px;
-  }
+export const WeatherIconText = styled.span`
+  font-size: 12px;
 `;

@@ -1,19 +1,30 @@
 import { useSelector } from 'react-redux';
 import * as S from './styled';
 import { selectCurrentCity } from '../../store/cities/selectors';
+import { useState } from 'react';
+import { SelectRender } from './SelectRender';
 
-interface ISelectProps {
-  onClick: () => void;
-  status: string;
-}
-
-export const CitySelect: React.FC<ISelectProps> = ({ onClick, status }) => {
+export const CitySelect = () => {
   const pinnedCity = useSelector(selectCurrentCity);
 
+  const [dropDownListStatus, setDropDownListStatus] = useState('close');
+
+  const handleToggleDropDownList = () => {
+    setDropDownListStatus((prevState) =>
+      prevState === 'open' ? 'close' : 'open'
+    );
+  };
+
   return (
-    <S.CitySelect onClick={onClick}>
-      {pinnedCity.cityName}
-      <S.Button $status={status} />
-    </S.CitySelect>
+    <S.Wrapper>
+      <S.CitySelect onClick={handleToggleDropDownList}>
+        {pinnedCity.cityName}
+        <S.Button $status={dropDownListStatus} />
+      </S.CitySelect>
+      <SelectRender
+        onClick={handleToggleDropDownList}
+        status={dropDownListStatus}
+      />
+    </S.Wrapper>
   );
 };

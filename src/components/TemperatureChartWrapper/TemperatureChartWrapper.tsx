@@ -9,12 +9,12 @@ export const TemperatureChartWrapper = () => {
       <S.StyledWrapper>
         <h3>{PHRASES.TEMPERATURE_CHART}</h3>
         <S.StyledTemperatureChart>
-          <nav>
+          <S.Navigation>
             <S.StyledLink to='/' end>
               {PHRASES.TODAY}
             </S.StyledLink>
             <S.StyledLink to='/week-temperature'>{PHRASES.WEEK}</S.StyledLink>
-          </nav>
+          </S.Navigation>
           <Routes>
             <Route path='/' element={<TemperatureChart period='today' />} />
             <Route

@@ -9,19 +9,18 @@ import {
   selectSearchCitiesLoading,
 } from '../../store/searchCities/selectors';
 import { PHRASES } from './../../constants/phrases';
+import * as S from './styled';
 
 interface IRenderProps {
   onClick: () => void;
+  status: string;
 }
 
-export const SearchRender: React.FC<IRenderProps> = ({ onClick }) => {
+export const SearchRender: React.FC<IRenderProps> = ({ onClick, status }) => {
   const dispatch: AppDispatch = useDispatch();
 
   const searchCities = useSelector(selectSearchCities);
-  const loading: boolean = useSelector(selectSearchCitiesLoading);
-
-  if (!searchCities) return <div>{PHRASES.NO_RESULTS}</div>;
-  if (loading) return <div>{PHRASES.LOADING}</div>;
+  const loading = useSelector(selectSearchCitiesLoading);
 
   const handlerSelectCity = (searchCity: ISearchCityResponse) => {
     const { id, name, country_code, latitude, longitude } = searchCity;
@@ -60,12 +59,15 @@ export const SearchRender: React.FC<IRenderProps> = ({ onClick }) => {
   };
 
   return (
-    <>
-      {searchCities.map((city: ISearchCityResponse) => (
-        <div key={city.id} onClick={() => handlerSelectCity(city)}>
-          {city.name}, {city.country}
-        </div>
-      ))}
-    </>
+    <S.DropDownList $status={status} data-status={status}>
+      {loading && <S.DropDownInfoItem>{PHRASES.LOADING}</S.DropDownInfoItem>}
+
+      {(searchCities &&
+        searchCities.map((city: ISearchCityResponse) => (
+          <S.DropDownItem key={city.id} onClick={() => handlerSelectCity(city)}>
+            {city.name}, {city.country}
+          </S.DropDownItem>
+        ))) || <S.DropDownInfoItem>{PHRASES.NO_RESULTS}</S.DropDownInfoItem>}
+    </S.DropDownList>
   );
 };
