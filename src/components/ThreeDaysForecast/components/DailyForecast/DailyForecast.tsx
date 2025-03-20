@@ -1,8 +1,8 @@
 import moment from 'moment';
-import { IThreeDaysForecast } from '../ThreeDaysForecast';
+import { IThreeDaysForecast } from '../..';
 import * as S from './styled';
-import { WeatherIcon } from '../WeatherIcon';
-import { DATE_FORMATS } from '../../constants/dateFormats';
+import { WeatherIcon } from '../../../WeatherIcon';
+import { DATE_FORMATS } from '../../../../constants/dateFormats';
 
 interface IProps {
   daysData: IThreeDaysForecast;

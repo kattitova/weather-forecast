@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Plotly from 'plotly.js-dist';
-import { useTemperatureChartData } from '../../hooks';
-import { PHRASES } from '../../constants/phrases';
+import { useTemperatureChartData } from '../../../../hooks';
+import { PHRASES } from '../../../../constants/phrases';
 
 interface IProps {
   period: 'today' | 'week';

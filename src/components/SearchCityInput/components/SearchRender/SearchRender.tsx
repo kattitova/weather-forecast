@@ -1,15 +1,15 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { ICurrentCityData } from '../../types/store/cities/types';
-import { AppDispatch } from '../../store';
-import { addCity, setCurrentCity } from '../../store/cities/actions';
-import { getImage } from '../../api';
-import { ISearchCityResponse } from '../../types/api/types';
+import { ICurrentCityData } from '../../../../types/store/cities/types';
+import { AppDispatch } from '../../../../store';
+import { addCity, setCurrentCity } from '../../../../store/cities/actions';
+import { getImage } from '../../../../api';
+import { ISearchCityResponse } from '../../../../types/api/types';
 import {
   selectSearchCities,
   selectSearchCitiesLoading,
-} from '../../store/searchCities/selectors';
-import { PHRASES } from './../../constants/phrases';
-import * as S from './styled';
+} from '../../../../store/searchCities/selectors';
+import { PHRASES } from '../../../../constants/phrases';
+import * as S from '../../styled';
 
 interface IRenderProps {
   onClick: () => void;
