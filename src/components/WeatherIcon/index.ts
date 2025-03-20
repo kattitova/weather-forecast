@@ -1,2 +1,2 @@
 export * from './WeatherIcon';
-export * from './weatherIconData';
+export * from '../../constants/weatherIconData';

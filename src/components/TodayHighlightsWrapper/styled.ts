@@ -12,26 +12,6 @@ export const StyledHighlights = styled.div`
   grid-template-columns: repeat(3, 1fr) 2fr;
   gap: 15px;
 
-  div {
-    border-radius: 5px;
-    border: 1px solid #dfdfdf;
-    padding: 10px;
-
-    p {
-      color: #9d9d9d;
-      font-size: 10px;
-    }
-
-    span {
-      justify-self: center;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      font-weight: 600;
-      margin: 10px 0 5px;
-    }
-  }
-
   & > :last-child {
     span {
       img {
@@ -47,4 +27,24 @@ export const StyledHighlights = styled.div`
       }
     }
   }
+`;
+
+export const Highlight = styled.div`
+  border-radius: 5px;
+  border: 1px solid #dfdfdf;
+  padding: 10px;
+`;
+
+export const HighlightTitle = styled.p`
+  color: #9d9d9d;
+  font-size: 10px;
+`;
+
+export const HighlightText = styled.span`
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 600;
+  margin: 10px 0 5px;
 `;

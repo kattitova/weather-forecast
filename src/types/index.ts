@@ -1,1 +1,1 @@
-export * from './chartSettings';
+export * from '../utils/chartSettings';

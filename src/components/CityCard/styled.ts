@@ -5,36 +5,42 @@ export const CityCard = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+`;
 
-  h2 {
-    font-size: 20px;
-  }
+export const Title = styled.h2`
+  font-size: 20px;
+`;
 
-  section {
-    position: absolute;
-    top: 40px;
-    color: #fff;
-    display: flex;
-    gap: 10px;
-    width: 100%;
-    justify-content: flex-end;
-    padding: 10px 25px;
-    align-items: center;
-
-    img {
-      width: 50px;
-      height: auto;
-      filter: invert(1);
-    }
-  }
+export const WeatherInfo = styled.section`
+  position: absolute;
+  top: 38px;
+  color: #fff;
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: flex-end;
+  padding: 10px 25px;
+  align-items: center;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  background: linear-gradient(
+    180deg,
+    rgba(34, 4, 61, 0.6019199916294643) 0%,
+    rgba(255, 255, 255, 0) 75%
+  );
 
   img {
-    border-radius: 10px;
-    width: 300px;
-    width: 100%;
-    object-fit: cover;
-    height: 250px;
+    width: 50px;
+    height: auto;
+    filter: invert(1);
   }
+`;
+
+export const Background = styled.img`
+  border-radius: 10px;
+  width: 100%;
+  object-fit: cover;
+  height: 250px;
 `;
 
 export const StyledData = styled.div`

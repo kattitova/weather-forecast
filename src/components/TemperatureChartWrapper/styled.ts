@@ -14,11 +14,11 @@ export const StyledTemperatureChart = styled.div`
   padding: 10px;
   padding-right: 20px;
   margin-bottom: 10px;
+`;
 
-  nav {
-    display: flex;
-    gap: 10px;
-  }
+export const Navigation = styled.nav`
+  display: flex;
+  gap: 10px;
 `;
 
 export const StyledLink = styled(NavLink)`

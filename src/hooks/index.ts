@@ -1,1 +1,2 @@
-export * from './useChartData';
+export * from './useTemperatureChartData';
+export * from './usePrecipitationChartData';

@@ -16,12 +16,6 @@ export const TemperatureWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  div {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-  }
-
   img {
     width: 16px;
     filter: brightness(0) saturate(100%) invert(13%) sepia(27%) saturate(4885%)
@@ -29,13 +23,26 @@ export const TemperatureWrapper = styled.div`
   }
 `;
 
-export const DayWrapper = styled.div`
+export const TemperatureInfo = styled.div`
   display: flex;
+  align-items: center;
+  gap: 3px;
+
+  & + :last-child {
+    img {
+      rotate: 180deg;
+    }
+  }
+`;
+
+export const DayWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   align-items: center;
   justify-content: center;
   width: 50%;
-  gap: 10px;
   font-weight: 600;
+  text-align: center;
 
   div {
     margin-right: 0;

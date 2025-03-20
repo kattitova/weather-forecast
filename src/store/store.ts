@@ -4,20 +4,27 @@ import {
   combineReducers,
   legacy_createStore as createStore,
 } from 'redux';
-import { thunk, ThunkDispatch, ThunkMiddleware } from 'redux-thunk';
-import { weatherReducer } from './weather/weatherReducer';
-import { WeatherActionTypes } from './weather/weatherTypes';
-import { currentCityReducer } from './city/currentCityReducer';
+import { thunk, ThunkDispatch } from 'redux-thunk';
+import { citiesReducer } from './cities/reducer';
+import { weatherReducer } from './weather/reducer';
+import { searchCitiesReducer } from './searchCities/reducer';
+import { loadState, saveState } from '../utils';
 
 export const RootReducer = combineReducers({
+  cities: citiesReducer,
   weather: weatherReducer,
-  currentCity: currentCityReducer,
+  searchCities: searchCitiesReducer,
 });
 
 export const store = createStore(
   RootReducer,
-  applyMiddleware(thunk as ThunkMiddleware<RootState, WeatherActionTypes>)
+  loadState('cities'), //preloadedState
+  applyMiddleware(thunk)
 );
+
+store.subscribe(() => {
+  saveState(store.getState(), 'cities');
+});
 
 export type RootState = ReturnType<typeof RootReducer>;
 export type AppDispatch = ThunkDispatch<RootState, void, AnyAction>;

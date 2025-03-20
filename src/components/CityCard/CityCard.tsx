@@ -1,49 +1,58 @@
 import * as S from './styled';
-import { CurrentCityData, RootState } from '../../store';
 import moment from 'moment';
 import { WeatherIcon } from '../WeatherIcon';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { DropDownList } from '../DropDownList';
+import { CitySelect } from '../CitySelect';
+import { PHRASES } from '../../constants/phrases';
+import { DATE_FORMATS } from '../../constants/dateFormats';
+import {
+  selectCurrentCityCountryCode,
+  selectCurrentCityImage,
+  selectCurrentCityName,
+} from '../../store/cities/selectors';
+import {
+  selectWeatherCurrent,
+  selectWeatherCurrentUnits,
+  selectWeatherLoading,
+} from '../../store/weather/selectors';
 
 export const CityCard = () => {
-  const city: CurrentCityData = useSelector(
-    (state: RootState) => state.currentCity.city
-  );
+  const loading = useSelector(selectWeatherLoading);
 
-  useEffect(() => {
-    localStorage.setItem('cities', JSON.stringify([city]));
-  }, [city]);
+  const cityName = useSelector(selectCurrentCityName);
+  const countryCode = useSelector(selectCurrentCityCountryCode);
+  const image = useSelector(selectCurrentCityImage);
 
-  const { cityName, countryCode, weather, image } = city;
+  const current = useSelector(selectWeatherCurrent);
+  const current_units = useSelector(selectWeatherCurrentUnits);
 
-  if (!weather) {
-    return <p>Loading...</p>;
+  if (loading) {
+    return <p>{PHRASES.LOADING}</p>;
   }
-  const { current, current_units } = weather;
 
-  const todayData: string = moment().format('dddd, h:mm a');
+  const todayDay = moment().format(DATE_FORMATS.REGULAR);
+  const todayData = moment().format(DATE_FORMATS.DAY_TIME);
 
   return (
     <S.CityCard>
       <S.CityCardHeader>
-        <h2>
+        <S.Title>
           {cityName}, {countryCode}
-        </h2>
-        <DropDownList />
+        </S.Title>
+        <CitySelect />
       </S.CityCardHeader>
-      <section>
+      <S.WeatherInfo>
         <WeatherIcon weatherCode={current.weather_code} />
         <S.CurrentTemp>
           <p>{current['temperature_2m']}</p>
           <span>{current_units['temperature_2m']}</span>
         </S.CurrentTemp>
         <S.StyledData>
-          <p>{moment().format('MMMM D YYYY')}</p>
+          <p>{todayDay}</p>
           <p>{todayData}</p>
         </S.StyledData>
-      </section>
-      <img src={image} alt={cityName} />
+      </S.WeatherInfo>
+      <S.Background src={image} alt={cityName} />
     </S.CityCard>
   );
 };

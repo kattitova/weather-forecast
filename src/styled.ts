@@ -26,19 +26,6 @@ export const Wrapper = styled.div`
     img {
       height: 100%;
     }
-
-    input {
-      margin-left: auto;
-      border-radius: 4px;
-      border: none;
-      background: #efefef;
-      padding: 5px 10px;
-
-      &::placeholder {
-        color: rgb(192, 190, 190);
-        font-size: 12px;
-      }
-    }
   }
 
   main {
