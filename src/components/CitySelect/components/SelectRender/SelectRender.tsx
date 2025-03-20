@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../store';
-import { ICurrentCityData } from '../../types/store/cities/types';
-import { removeCity, setCurrentCity } from '../../store/cities/actions';
-import * as S from './styled';
-import { selectCitiesList } from '../../store/cities/selectors';
+import { AppDispatch } from '../../../../store';
+import { ICurrentCityData } from '../../../../types/store/cities/types';
+import { removeCity, setCurrentCity } from '../../../../store/cities/actions';
+import * as S from '../../styled';
+import { selectCitiesList } from '../../../../store/cities/selectors';
 
 interface IRenderProps {
   onClick: () => void;

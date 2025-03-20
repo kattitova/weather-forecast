@@ -1,2 +1,2 @@
 export * from './SearchCityInput';
-export * from './SearchRender';
+export * from './components/SearchRender';

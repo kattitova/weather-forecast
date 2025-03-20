@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { DailyForecast } from '../DailyForecast';
 import * as S from './styled';
 import { selectWeather } from '../../store/weather/selectors';
 import { PHRASES } from '../../constants';
+import { DailyForecast } from './components/DailyForecast';
 
 export interface IThreeDaysForecast {
   day: string;

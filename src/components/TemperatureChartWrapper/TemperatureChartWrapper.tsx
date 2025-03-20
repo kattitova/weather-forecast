@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import * as S from './styled';
-import { TemperatureChart } from '../TemperatureChart';
+import { TemperatureChart } from './components/TemperatureChart';
 import { PHRASES } from '../../constants/phrases';
 
 export const TemperatureChartWrapper = () => {

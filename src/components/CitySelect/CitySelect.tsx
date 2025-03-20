@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import * as S from './styled';
 import { selectCurrentCity } from '../../store/cities/selectors';
 import { useState } from 'react';
-import { SelectRender } from './SelectRender';
+import { SelectRender } from './components/SelectRender';
 
 export const CitySelect = () => {
   const pinnedCity = useSelector(selectCurrentCity);

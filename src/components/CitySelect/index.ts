@@ -1,2 +1,2 @@
 export * from './CitySelect';
-export * from './SelectRender';
+export * from './components/SelectRender';

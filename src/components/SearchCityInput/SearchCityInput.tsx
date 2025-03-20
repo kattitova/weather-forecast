@@ -4,7 +4,7 @@ import { AppDispatch } from '../../store';
 import { useDispatch } from 'react-redux';
 import { getSearchCities } from '../../store/searchCities/thunks';
 import { PHRASES } from '../../constants/phrases';
-import { SearchRender } from './SearchRender';
+import { SearchRender } from './components/SearchRender';
 
 export const SearchCityInput = () => {
   const [inputValue, setInputValue] = useState('');
